@@ -9,7 +9,7 @@ module.metadata = {
   "stability": "experimental"
 };
 
-let { registerTool } = require("dev/tool");
+let { registerTool } = require("./tool"); // should be dev/tool
 let { scratch } = require("./scratch");
 
 let evaluate = scratch({})
@@ -21,7 +21,11 @@ registerTool({
   label: "Addon pad",
   tooltip: "Addon authoring tool",
   onRequest: function(data) {
-    evaluate(data.code)
+    let result = evaluate(data.code)
+    data.source.postMessage({
+      id: data.id,
+      data: result
+    }, "*");
     //console.log(JSON.stringify(data.code))
   }
 })

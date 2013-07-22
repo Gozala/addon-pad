@@ -20,6 +20,12 @@ function send(data) {
   window.dispatchEvent(event)
 }
 
+window.addEventListener("message", function(event) {
+  if (event.origin === "addon:addon-pad") {
+
+  }
+})
+
 var editor = Editor(document.body, {
   matchBrackets: true,
   electricChars: true,
@@ -29,7 +35,7 @@ var editor = Editor(document.body, {
   lineNumbers: true,
   mode: "javascript",
   onChange: function(editor, change) {
-    send({ change: change, code: editor.getValue() })
+    send({ address: "addon:addon-pad", change: change, code: editor.getValue() })
   },
   extraKeys: {
     "Tab": function indent(editor) {
